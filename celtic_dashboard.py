@@ -116,11 +116,17 @@ def get_solstices_and_equinoxes(year):
 
 # Sidebar Content
 st.sidebar.title("Celtic Calendar Settings")
+
+# Sidebar: Select a Base Date
 selected_date = st.sidebar.date_input("Select a Date", datetime.date.today())
-date_offset = st.sidebar.number_input("Days from Today:", value=0, step=1, format="%i")
-navigated_date = datetime.date.today() + datetime.timedelta(days=date_offset)
-celtic_month, celtic_day = calculate_celtic_date(navigated_date)
-lunar_phase = calculate_lunar_phase(navigated_date)
+
+# Sidebar: Adjust Date Relative to Selected Date
+date_offset = st.sidebar.number_input(
+    "Days from Selected Date:",
+    value=0,  # Default to no offset
+    step=1,  # Adjust by days
+    format="%i"
+)
 
 year = navigated_date.year
 celestial_events = get_solstices_and_equinoxes(year)
