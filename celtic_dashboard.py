@@ -128,8 +128,21 @@ date_offset = st.sidebar.number_input(
     format="%i"
 )
 
+# Safeguard the Navigated Date Calculation
+try:
+    navigated_date = selected_date + datetime.timedelta(days=date_offset)
+except NameError as e:
+    st.error(f"An error occurred while calculating the date: {e}")
+    navigated_date = datetime.date.today()  # Default to today in case of error
+
+# Calculate Celtic Month, Day, and Lunar Phase
+celtic_month, celtic_day = calculate_celtic_date(navigated_date)
+lunar_phase = calculate_lunar_phase(navigated_date)
+
+# Get Celestial Events for the Year
 year = navigated_date.year
 celestial_events = get_solstices_and_equinoxes(year)
+
 
 # Sidebar: Display dynamic celestial events
 
